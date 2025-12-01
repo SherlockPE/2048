@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>2048 Game</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+
+<!-- Voy a tratar de hacer un html semantico guiandome de esta pagina "https://es.semrush.com/blog/html-semantico/"  -->
+<!--  -->
+<!--
+
+- <header>: la etiqueta de encabezamiento define el contenido introductorio de una página o sección.
+- <nav>: la etiqueta de navegación se utiliza para los enlaces de navegación. Puede anidarse dentro 
+		de la etiqueta <header>, pero las etiquetas <nav> de navegación secundaria también suelen usarse en otras secciones de la página.
+- <main>: esta etiqueta contiene el contenido principal (también llamado cuerpo) de una página.
+		 Solo debería haber una etiqueta <main> por página.
+- <article>: la etiqueta artículo define el contenido independiente de la página o web en la que se encuentra.
+		 No significa necesariamente una "entrada del blog". Piensa en ella más bien como "una prenda de vestir": una etiqueta independiente que puede emplearse en varios contextos.
+- <section>: utilizar <section> es una forma de agrupar contenidos que tratan sobre temas similares. 
+		Las etiquetas de sección son diferentes a las de artículo, no son necesariamente autónomas, sino que forman parte de algo más. 
+- <aside>: un elemento "aside" define el contenido de menor importancia. Suele emplearse para las barras 
+		laterales, que incluyen información complementaria pero no esencial.
+- <footer>: usa <footer> en la parte inferior de una página. 
+		La etiqueta suele incluir información de contacto, derechos de autor y navegación por la web -->
+
+
+<body>
+	<header id="hd"></header>
+	<nav id="idnav"></nav>
+	<section>
+		<!-- Game container -->
+		<div class="game-container">
+			<h1>2048</h1>
+			<div class="score-container">
+				<span>Score: <span id="score">0</span></span>
+				<button id="restart-btn">Restart</button>
+			</div>
+			<div class="grid-container">
+				<!-- The grid will be filled by JavaScript -->
+			</div>
+		</div>
+	</section>
+	<footer id="footer"></footer>
+	<script src="script.js"></script>
+</body>
+
+</html>
