@@ -1,10 +1,12 @@
 import { printMatrix } from './utils.js';
+import { activateKeyboardEvents } from './keyBoardEvents.js';
+import { GRID_SIZE } from './types.js';
 
 const container_grid = document.querySelector('.grid-container');
 
 //Variables globales del juego
-const GRID_SIZE = 4;
-let score = 0;
+// const GRID_SIZE = 4;
+// let score = 0;
 
 //Utilidades
 
@@ -57,22 +59,7 @@ function generateTiles(matrix) {
 	console.log("Nuevo tile en ", cell, " con valor ", new_value);
 }
 
-
-// Crear eventos del teclado:
-// Creo que es mejor usay keyup que keydown para optimización de llamadas a la función
-document.addEventListener("keyup", (ev) => {
-	console.log("codigo de tecla ", ev.key);
-	if (ev.code === "ArrowUp")
-		console.log("Flecha de arriba");
-	if (ev.code === "ArrowDown")
-		console.log("Flecha de Abajo");
-	if (ev.code === "ArrowLeft")
-		console.log("Flecha de izquierda");
-	if (ev.code === "ArrowRight")
-		console.log("Flecha de derecha");
-});
-
-
+// Limpiar matriz
 function clear_matrix(board) {
 	for (let i = 0; i < board.length; i++) {
 		board[i].fill(0);
@@ -81,12 +68,13 @@ function clear_matrix(board) {
 
 //El juego se ejecuta aquí, esta función está linkeada a un botón en el HTML
 function startGame() {	
-	var matrix = (Array(GRID_SIZE).fill(0)).map(new_cells => Array(GRID_SIZE).fill(0));
-	score = 0;
+	let matrix = (Array(GRID_SIZE).fill(0)).map(new_cells => Array(GRID_SIZE).fill(0));
+	var score = 0;
 	clear_matrix(matrix);
 	generateTiles(matrix);
 	generateTiles(matrix);
 	printMatrix(matrix);
+	activateKeyboardEvents(matrix, score);
 }
 
 
