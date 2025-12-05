@@ -1,11 +1,8 @@
-
 .grid-container
 {
-    background: #7A9E7E;
+    background: #7A9E7E; 
     border-radius: 10px;
     display: grid;
-    /* grid-auto-rows: 50px; */
-    /* grid-template-columns: repeat(4, minmax(50px, 1fr)); */
     grid-template-columns: repeat(4, 1fr);
     gap: 4px;
     place-content: center;
@@ -16,11 +13,108 @@
     padding: 10px;
 }
 
+/* Fondo de las celdas vacías */
 .grid-cell
 {
     border-radius: 4px;
     place-content: center;
     aspect-ratio: 1 / 1;
+    background-color: #31493C; 
+}
+
+/* Estilo para los tiles */
+.tile {
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    
+    /* Centrar (como centrar un div, XDDD)*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* Tipografía */
+    font-size: 35px;
+    font-weight: bold;
+
+    /* Transiciones suaves */
+    transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out; 
+}
+
+
+/* Los colores son basados en la paleta que creé */
+.value-2
+{ 
+    background-color: #E8F1F2;
+    color: #31493C;
+}
+
+.value-4
+{ 
+    background-color: #B3EFB2;
+    color: #31493C; 
+}
+
+.value-8
+{ 
+    background-color: #5a755d;
+    color: #E8F1F2;
+}
+
+.value-16
+{ 
+    background-color: #60866A;
+    color: #E8F1F2; 
+}
+
+.value-32
+{ 
+    background-color: #486751;
+    color: #E8F1F2; 
+}
+
+.value-64
+{ 
     background-color: #31493C;
-    color: white;
+    color: #E8F1F2; 
+}
+
+.value-128
+{ 
+    background-color: #20353F;
+    color: #B3EFB2;
+}
+
+.value-256
+{ 
+    background-color: #001A23;
+    color: #B3EFB2; 
+}
+
+.value-512, .value-1024, .value-2048
+{ 
+    background-color: #001A23;
+    color: #B3EFB2; 
+}
+
+/* Ajuste de fuente para que quepan los números grandes */
+.value-128, .value-256, .value-512, .value-1024, .value-2048 {
+    font-size: 25px;
+}
+
+/* animacion popin  */ /*pop pip pop pip pop pim pop pip po pi pop*/
+/* Por ahora */
+@keyframes tile-pop-in {
+    0% {
+        transform: scale(0); /*empieza chequeto*/
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1); /* Crece */
+        opacity: 1;
+    }
+}
+
+.tile-new {
+    animation: tile-pop-in 0.15s ease-out;
 }

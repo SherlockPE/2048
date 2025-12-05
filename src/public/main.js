@@ -3,21 +3,55 @@ import { activateKeyboardEvents } from './keyBoardEvents.js';
 import { GRID_SIZE } from './types.js';
 
 const container_grid = document.querySelector('.grid-container');
+const scoreDisplay = document.getElementById('score');
 
-//Variables globales del juego
-// const GRID_SIZE = 4;
-// let score = 0;
+// Variables de Estado del Juego (Globales)
+let board = [];
+let score = 0;
 
-//Utilidades
 
-function generateRandomEmptyCell(matrix)
+// --- RENDERING (Funciones de DOM) ---
+
+//Dibujar matriz
+function drawBoard() {
+    const cells = container_grid.querySelectorAll('.grid-cell');
+    let cellIndex = 0;
+
+    for (let r = 0; r < GRID_SIZE; r++) {
+        for (let c = 0; c < GRID_SIZE; c++) {
+            const cell = cells[cellIndex];
+            const value = board[r][c];
+            
+            // 1. Limpia y resetea las clases
+            cell.textContent = ''; 
+            cell.className = 'grid-cell'; 
+
+            if (value > 0) {
+                // Añadir clases
+                cell.textContent = value;
+                cell.classList.add('tile'); 
+                cell.classList.add(`value-${value}`);
+            }
+            cellIndex++;
+        }
+    }
+	//Actualizar puntuación
+    if (scoreDisplay) {
+        scoreDisplay.textContent = score;
+    }
+}
+
+
+// --- UTILITIES (Funciones de Lógica) ---
+
+function generateRandomEmptyCell()
 {
 	const empty_cells = [];
 
 	//Recorro para encontrar las celdas vacías y las guardo en un array
 	for (let i = 0; i < GRID_SIZE; i++) {
 		for (let j = 0; j < GRID_SIZE; j++) {
-			if (matrix[i][j] === 0)
+			if (board[i][j] === 0)
 				empty_cells.push({ x: j, y: i });
 		}
 	}
@@ -34,49 +68,59 @@ function generateRandomEmptyCell(matrix)
 
 //Crear estructura 
 function createStructure() {
+    if (container_grid.children.length > 0)
+		return; 
+
 	for (let i = 0; i < (GRID_SIZE * GRID_SIZE); i++) {
 		const cell = document.createElement('div');
 		cell.classList.add('grid-cell');
-		cell.textContent = i + 1;
 		container_grid.appendChild(cell);
 	}
 }
 
 // Generar tiles inciales
-function generateTiles(matrix) {
-	const cell = generateRandomEmptyCell(matrix);
+function generateTiles() {
+	const cell = generateRandomEmptyCell();
 	if (!cell)
 	{
 		console.log("No se pudo generar un nuevo tile");
-		return;
+		return false;
 	}
-	let new_value = Math.random() 
+	let new_value = Math.random();
 	if (new_value < 0.9)
 		new_value = 2;
 	else
 		new_value = 4;
-	matrix[cell.y][cell.x] = new_value;
+	board[cell.y][cell.x] = new_value;
 	console.log("Nuevo tile en ", cell, " con valor ", new_value);
+    return true;
 }
 
-// Limpiar matriz
-function clear_matrix(board) {
-	for (let i = 0; i < board.length; i++) {
-		board[i].fill(0);
-	}
+// Callback para actualizar el score desde keyBoardEvents.js
+function updateScore(value) {
+    score += value;
+    if (scoreDisplay) {
+        scoreDisplay.textContent = score;
+    }
 }
 
 //El juego se ejecuta aquí, esta función está linkeada a un botón en el HTML
 function startGame() {	
-	let matrix = (Array(GRID_SIZE).fill(0)).map(new_cells => Array(GRID_SIZE).fill(0));
-	var score = 0;
-	clear_matrix(matrix);
-	generateTiles(matrix);
-	generateTiles(matrix);
-	printMatrix(matrix);
-	activateKeyboardEvents(matrix, score);
+	board = Array.from({ length: GRID_SIZE }, () => Array(GRID_SIZE).fill(0));
+	score = 0; 
+    
+    // Genero dos tiles iniciales y dibujo
+    if (generateTiles() && generateTiles()) {
+        drawBoard();
+    } else {
+        drawBoard(); 
+    }
+    
+	printMatrix(board);
+    
+    // Pasamos la matriz (por referencia) y las funciones de callback necesarias.
+	activateKeyboardEvents(board, updateScore, generateTiles, drawBoard);
 }
-
 
 
 function main() {
@@ -93,7 +137,7 @@ function main() {
 		console.log("error getting the restart-btn or start-btn");
 		return;
 	}
-	start_btn.addEventListener("click", startGame);
+	start_btn.addEventListener("click", startGame); // creo que puedo cambiar el icono de estos para que se ponga en play al inciio y luego en restar al final
 }
 
 main();
