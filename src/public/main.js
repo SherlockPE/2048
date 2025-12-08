@@ -125,6 +125,11 @@ function startGame() {
 	// activateTouchEvents(board, updateScore, generateTiles, drawBoard);
 }
 
+function restartGame()
+{
+	score = 0;
+	startGame();
+}
 
 function main() {
 	if (!container_grid) {
@@ -134,11 +139,13 @@ function main() {
 	createStructure();
 
 	const start_btn = document.getElementById("start-btn");
-	if (!start_btn)
+	const restart_btn = document.getElementById("restart-btn")
+	if (!start_btn || !restart_btn)
 	{
 		console.log("error getting the restart-btn or start-btn");
 		return;
 	}
+	restart_btn.addEventListener("click", restartGame)
 	start_btn.addEventListener("click", startGame); // creo que puedo cambiar el icono de estos para que se ponga en play al inciio y luego en restar al final
 }
 
