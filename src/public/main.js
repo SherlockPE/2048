@@ -1,5 +1,5 @@
 import { printMatrix } from './utils.js';
-import { activateKeyboardEvents } from './keyBoardEvents.js';
+import { activateKeyboardEvents/* , activateTouchEvents */} from './keyBoardEvents.js';
 import { GRID_SIZE } from './types.js';
 
 const container_grid = document.querySelector('.grid-container');
@@ -9,8 +9,6 @@ const scoreDisplay = document.getElementById('score');
 let board = [];
 let score = 0;
 
-
-// --- RENDERING (Funciones de DOM) ---
 
 //Dibujar matriz
 function drawBoard() {
@@ -97,17 +95,21 @@ function generateTiles() {
 }
 
 // Callback para actualizar el score desde keyBoardEvents.js
-function updateScore(value) {
-    score += value;
-    if (scoreDisplay) {
-        scoreDisplay.textContent = score;
-    }
+function updateScore(value)
+{
+	if (value > score)
+	{
+		score = value;
+		if (scoreDisplay)
+		{
+			scoreDisplay.textContent = score;
+		}
+	}
 }
 
 //El juego se ejecuta aquí, esta función está linkeada a un botón en el HTML
 function startGame() {	
 	board = Array.from({ length: GRID_SIZE }, () => Array(GRID_SIZE).fill(0));
-	score = 0; 
     
     // Genero dos tiles iniciales y dibujo
     if (generateTiles() && generateTiles()) {
@@ -120,6 +122,7 @@ function startGame() {
     
     // Pasamos la matriz (por referencia) y las funciones de callback necesarias.
 	activateKeyboardEvents(board, updateScore, generateTiles, drawBoard);
+	// activateTouchEvents(board, updateScore, generateTiles, drawBoard);
 }
 
 
@@ -130,9 +133,8 @@ function main() {
 	}
 	createStructure();
 
-	const restart_btn = document.getElementById("restart-btn");
 	const start_btn = document.getElementById("start-btn");
-	if (!restart_btn || !start_btn)
+	if (!start_btn)
 	{
 		console.log("error getting the restart-btn or start-btn");
 		return;

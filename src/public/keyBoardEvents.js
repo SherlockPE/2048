@@ -229,3 +229,64 @@ export function activateKeyboardEvents(matrix, updateScore, generateTiles, drawB
 	// Agregamos el nuevo listener
 	document.addEventListener("keyup", window.gameKeyHandler);
 }
+
+
+// // Variables para el manejo de gestos táctiles
+// let startX = 0;
+// let startY = 0;
+// const SWIPE_THRESHOLD = 50;
+// const GAME_CONTAINER_SELECTOR = '.game-container';
+
+// export function activateTouchEvents(matrix, updateScore, generateTiles, drawBoard)
+// {
+//     const gameContainer = document.querySelector(GAME_CONTAINER_SELECTOR);
+//     if (!gameContainer)
+//         return;
+
+//     gameContainer.addEventListener('touchstart', (event) =>
+//     {
+//         startX = event.touches[0].clientX;
+//         startY = event.touches[0].clientY;
+    
+//         event.preventDefault(); 
+//     }, { passive: false });
+
+//     gameContainer.addEventListener('touchmove', (event) => {
+//         event.preventDefault(); 
+//     }, { passive: false });
+
+//     gameContainer.addEventListener('touchend', (event) => {
+//         if (event.changedTouches.length === 0)
+//             return;
+
+//         const endX = event.changedTouches[0].clientX;
+//         const endY = event.changedTouches[0].clientY;
+
+//         const dx = endX - startX;
+//         const dy = endY - startY;
+
+//         if (Math.abs(dx) > SWIPE_THRESHOLD || Math.abs(dy) > SWIPE_THRESHOLD)
+//         {
+            
+//             if (Math.abs(dx) > Math.abs(dy)) {
+//                 // Movimiento Horizontal, Izquierda o Derevha
+//                 if (dx > 0) {
+//                     moveRight(matrix, updateScore, generateTiles, drawBoard);
+//                 } else {
+//                     moveLeft(matrix, updateScore, generateTiles, drawBoard);
+//                 }
+//             } else {
+//                 // Movimiento Vertical, arriba o abajp
+//                 if (dy > 0) {
+//                     moveDown(matrix, updateScore, generateTiles, drawBoard);
+//                 } else {
+//                     moveUp(matrix, updateScore, generateTiles, drawBoard);
+//                 }
+//             }
+//         }
+        
+//         // Reinicio las coordenadas de inicio para el próximo input
+//         startX = 0;
+//         startY = 0;
+//     });
+// }
