@@ -5,7 +5,7 @@ services:
       dockerfile: docker/Dockerfile
     volumes:
       - ./src/public:/usr/share/nginx/html
-    container_name: nginx
+    container_name: 2048flopez-r
     ports:
       - "8080:80"
     restart: unless-stopped
